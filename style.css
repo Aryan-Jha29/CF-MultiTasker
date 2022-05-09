@@ -13,28 +13,19 @@ body {
 #heading {
   text-align: center;
   font-weight: bold;
-  background-color: #614124;
+  background-color: #A0AECD;
   text-decoration: solid;
   margin: 0;
+  height: 90px;
+  padding-top: 20px;
 }
 
-#func {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 255px;
+.btn-outline-light {
+  border: none;
 }
 
-#func1 {
-  display: flex;
-  justify-content: center;
-  margin-right: 110px;
-}
-
-.shift {
-  padding-left: 10px;
-  display: flex;
-  gap: 180px
+.navbar {
+  padding-left: 5px;
 }
 
 .move {
@@ -43,7 +34,7 @@ body {
 }
 
 #content {
-  padding-left: 30%;
+  padding-left: 10%;
   height: 50%;
 }
 
