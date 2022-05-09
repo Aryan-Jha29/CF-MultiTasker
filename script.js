@@ -19,6 +19,7 @@ function speakText(msg) {
 }
 
 let msgEle = document.getElementById("msg");
+let headerEle = document.getElementById("header");
 let userEle = document.getElementById("user");
 let recInfo = document.getElementById("inf");
 let probSet = document.getElementById("prob");
@@ -26,15 +27,94 @@ let ratVal = document.getElementById("rat");
 let myChart = document.getElementById("myChart");
 let countChart = null;
 
+async function createInfo() {
+    msg.innerHTML = '';
+    headerEle.innerHTML = '';
+    headerEle.innerHTML = 'Enter Handle Details';
+    var ip = document.createElement("input");
+    var btn1 = document.createElement("button");
+    var btn2 = document.createElement("button");
+    ip.classList.add("form-control");
+    ip.setAttribute('type', 'text');
+    ip.setAttribute('placeholder', 'Enter Handle');
+    ip.style.width = 'fit-content';
+    ip.setAttribute('id', 'inf');
+    ip.style.marginTop = '10px';
+    btn1.innerText = 'Get Details';
+    btn1.classList.add("btn");
+    btn1.classList.add("btn-primary");
+    btn1.style.width = 'fit-content';
+    btn2.innerText = 'Analysis';
+    btn2.classList.add("btn");
+    btn2.classList.add("btn-primary");
+    btn2.style.width = 'fit-content';
+    btn2.style.backgroundColor = 'red';
+    btn2.style.borderColor = 'red';
+    btn1.type = "button"
+    btn2.type = "button"
+    headerEle.appendChild(ip);
+    headerEle.appendChild(btn1);
+    headerEle.appendChild(btn2);
+    btn1.onclick = getInfo;
+    btn2.onclick = getAnalytics;
+}
+async function createSub() {
+    msg.innerHTML = '';
+    headerEle.innerHTML = '';
+    headerEle.innerHTML = 'Enter Codeforces ID';
+    var ip = document.createElement("input");
+    var btn = document.createElement("button");
+    ip.style.marginTop = '10px';
+    ip.classList.add("form-control");
+    ip.setAttribute('type', 'text');
+    ip.setAttribute('placeholder', 'Enter Handle');
+    ip.style.width = 'fit-content';
+    ip.setAttribute('id', 'user');
+    btn.innerText = 'Get Details';
+    btn.classList.add("btn");
+    btn.classList.add("btn-primary");
+    btn.style.width = 'fit-content';
+    btn.type = "button"
+    headerEle.appendChild(ip);
+    headerEle.appendChild(btn);
+    btn.onclick = getSubmission;
+}
+async function createProb() {
+    msg.innerHTML = '';
+    headerEle.innerHTML = '';
+    headerEle.innerHTML = 'Enter Problem Details';
+    var ip1 = document.createElement("input");
+    var ip2 = document.createElement("input");
+    var btn = document.createElement("button");
+    ip1.style.marginTop = '10px';
+    ip1.classList.add("form-control");
+    ip1.setAttribute('type', 'text');
+    ip1.setAttribute('placeholder', 'Enter Tags , separated');
+    ip1.style.width = 'fit-content';
+    ip1.setAttribute('id', 'prob');
+    ip2.classList.add("form-control");
+    ip2.setAttribute('type', 'text');
+    ip2.setAttribute('placeholder', 'Enter Rating');
+    ip2.style.width = 'fit-content';
+    ip2.setAttribute('id', 'rat');
+    btn.innerText = 'Fetch Problems';
+    btn.classList.add("btn");
+    btn.classList.add("btn-primary");
+    btn.style.width = 'fit-content';
+    btn.type = "button"
+    headerEle.appendChild(ip1);
+    headerEle.appendChild(ip2);
+    headerEle.appendChild(btn);
+    btn.onclick = getProblems;
+}
 async function getSubmission() {
-    msgEle.innerText = "";
+    let userEle = document.getElementById("user");
     let user = userEle.value;
     userEle.value = '';
     let userInfoApi = `https://codeforces.com/api/user.info?handles=${user}`;
     let userStatusApi = `https://codeforces.com/api/user.status?handle=${user}&from=1&count=1`;
 
     let data = await Fetch(userInfoApi);
-    console.log(data);
     if (data.status === "FAILED") {
         msgEle.innerText = "Invalid Username";
         return;
@@ -49,7 +129,6 @@ async function getSubmission() {
     msgEle.innerHTML = `Waiting for <a href="https://codeforces.com/profile/${user}" target="_blank">your</a> submission ...`;
 
     let x = await Fetch(userStatusApi);
-    console.log(x);
 
     setInterval(async () => {
         let data = await Fetch(userStatusApi);
@@ -78,6 +157,7 @@ async function getContestDetails() {
     const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     msg.innerHTML = '';
+    headerEle.innerHTML = 'Upcoming Contests - ';
     if (countChart != null) {
         countChart.destroy();
     }
@@ -141,6 +221,7 @@ async function getContestDetails() {
     }
 }
 async function getInfo() {
+    let recInfo = document.getElementById("inf");
     let rec = recInfo.value;
     recInfo.value = '';
     console.log(rec);
@@ -157,19 +238,20 @@ async function getInfo() {
         countChart.destroy();
     }
     let str = data.result[0].firstName + ' ' + data.result[0].lastName;
-    var name = str;
-    var country = data.result[0].country;
-    var handle = data.result[0].handle;
-    var currRating = data.result[0].rating;
-    var maxRating = data.result[0].maxRating;
-    var currRank = data.result[0].rank;
-    var maxRank = data.result[0].maxRank;
-    var lastOnline = data.result[0].lastOnlineTimeSeconds;
-    var d = new Date(lastOnline * 1000);
+    let name = str;
+    let country = data.result[0].country;
+    let handle = data.result[0].handle;
+    let currRating = data.result[0].rating;
+    let maxRating = data.result[0].maxRating;
+    let currRank = data.result[0].rank;
+    let maxRank = data.result[0].maxRank;
+    let lastOnline = data.result[0].lastOnlineTimeSeconds;
+    let d = new Date(lastOnline * 1000);
     d = d.toLocaleString();
 
-    const key = ["Name:", "Country:", "Handle:", "CurrRating:", "MaxRating:", "CurrRank:", "MaxRank:", "LastOnline:"];
-    const val = [name, country, handle, currRating, maxRating, currRank, maxRank, d];
+    let key = ["Name:", "Country:", "Handle:", "CurrRating:", "MaxRating:", "CurrRank:", "MaxRank:", "LastOnline:"];
+    let val = [name, country, handle, currRating, maxRating, currRank, maxRank, d];
+    // console.log(val);
     speakText(`The Details Of User Are `);
 
     let table = document.createElement('table')
@@ -215,6 +297,8 @@ function HashCheck(x) {
     return x % store == 0;
 }
 async function getProblems() {
+    let probSet = document.getElementById("prob");
+    let ratVal = document.getElementById("rat");
     let probs = probSet.value;
     let value = ratVal.value;
     probSet.value = ratVal.value = '';
@@ -233,7 +317,6 @@ async function getProblems() {
     }
     let url = `https://codeforces.com/api/problemset.problems?tags=${res}`;
     let data = await Fetch(url);
-    console.log(data);
     if (data.status === "FAILED") {
         msgEle.innerText = "Check Details Once";
         return;
@@ -241,7 +324,7 @@ async function getProblems() {
     let store = {}; //creating object to store key-value pairs
     let contestNo = [], Id = [];
     let cnt = 1;
-    for (var i = 0; i < 10000 && i < Object.keys(data.result.problems).length; i++) {
+    for (var i = 0; i < 100000 && i < Object.keys(data.result.problems).length; i++) {
         if (Object.keys(store).length == 10) break;
         if (data.result.problems[i].rating == value && HashCheck(value)) {
             store[cnt++] = data.result.problems[i].name;
@@ -273,6 +356,7 @@ async function getProblems() {
     heading1.style.paddingBottom = 0;
     heading2.style.paddingBottom = 0;
 
+    console.log(store);
     speakText(`Here are some of the selected problems`);
     for (var key of Object.keys(store)) {
         var div = document.createElement("div");
@@ -301,6 +385,7 @@ async function getProblems() {
     }
 }
 async function getAnalytics() {
+    let recInfo = document.getElementById("inf");
     let rec = recInfo.value;
     recInfo.value = '';
     let userSubmissions = `https://codeforces.com/api/user.status?handle=${rec}`;
