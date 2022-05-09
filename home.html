@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CF MultiTasker</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-    <script type="text/javascript"> function zoom() { document.body.style.zoom = "80%" } </script>
     <link rel="stylesheet" href="./Bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -18,56 +17,20 @@
             <h1 id="heading">CodeForces MultiTasker</h1>
             <nav class="navbar navbar-dark bg-dark">
                 <div class="container-fluid">
-                    <div id="func">
-                        <button class="btn btn-outline-light cf2">Get User Info</button>
-                        <button class="btn btn-outline-light cf2" id="sf">Upcoming Contests</button>
+                    <div id="all">
+                        <button class="btn btn-outline-light cf2" onclick="createInfo()">Get User Info</button>
+                        <button class="btn btn-outline-light cf2" onclick="getContestDetails()">Upcoming
+                            Contests</button>
+                        <button class="btn btn-outline-light cf2" onclick="createSub()">Latest Submission</button>
+                        <button class="btn btn-outline-light cf2" onclick="createProb()">Practice Problems</button>
                     </div>
-                    <div id="func1">
-                        <button class="btn btn-outline-light cf2" id="sf1">Last Submission</button>
-                    </div>
-                    <button class="btn btn-outline-light cf2" style="padding-right: 90px;padding-left: 70px;">Practice
-                        Problems</button>
                 </div>
             </nav>
             <br>
-            <div class="shift">
-                <div class="row">
-                    <div class="col">
-                        <input type="text" id="inf" class="form-control" placeholder="tourist"
-                            style="width: fit-content;">
-                        <button class="btn btn-primary" style="width:fit-content;" onclick="getInfo()">Info</button>
-                        <button class="btn btn-primary"
-                            style="width:fit-content;background-color: red;border-color: red;"
-                            onclick="getAnalytics()">Analysis</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button class="btn btn-primary" style="width:fit-content;" onclick="getContestDetails()">
-                            Give Updates</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <input type="text" id="user" class="form-control" placeholder="Enter handle"
-                            style="width: fit-content">
-                        <button class="btn btn-primary" style="width:50%;" onclick="getSubmission()">Get</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <input type="text" id="prob" class="form-control" placeholder="Enter Tags , separated"
-                            style="width:fit-content">
-                        <input type="text" id="rat" class="form-control" placeholder="Rating"
-                            style="width: fit-content">
-                        <button class="btn btn-primary" style="width:fit-content;"
-                            onclick="getProblems()">Fetch</button>
-                    </div>
-                </div>
-            </div>
+            <h4 id="header" style="padding-left: 10px;font-weight: bold;">Input Area-</h4>
             <hr id="mod">
             <div id="combine">
-                <h5> Output Area-</h5>
+                <h5 style="padding-left: 10px;"> Output Area-</h5>
                 <div id="content">
                     <h6 id="msg"></h6>
                 </div>
